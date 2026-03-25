@@ -14,7 +14,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Esther Adeogun
+            {""} Esther Adeogun
           </a>
           open-sourced on
           <a
