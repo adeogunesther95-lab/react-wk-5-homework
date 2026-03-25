@@ -15,7 +15,7 @@ function App() {
         </a>
         open-sourced on
         <a
-          href="https://github.com/adeogunesther95-lab/vanilla-weather-week8"
+          href="https://github.com/adeogunesther95-lab/react-wk-5-homework"
           target="_blank"
           rel="noopener noreferrer"
         >
