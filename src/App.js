@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <div className="App">
-      Weather Application
+      <h1>Weather Application</h1>
       <footer>
         This project was coded by
         <a
@@ -23,7 +23,7 @@ function App() {
         </a>
         and hosted on
         <a
-          href="https://vanilla-weather-week8.netlify.app/"
+          href="https://ea-react-weather-app.netlify.app/"
           target="_blank"
           rel="noopener noreferrer"
         >
