@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import FormattedDate from "./FormattedDate";
+import WeatherInfo from "./WeatherInfo";
 
 import "./Weather.css";
 
 export default function Weather(props) {
   const [ready, setReady] = useState(false);
   const [weatherData, setWeatherData] = useState({});
+  const [city, setCity] = useState(props.defaultCity);
 
   function handleResponse(response) {
     setReady(true);
@@ -22,15 +23,26 @@ export default function Weather(props) {
         "https://www.gstatic.com/weather/conditions/v1/svg/cloudy_light.svg",
     });
   }
-  const apiKey = "7797aa5c054d2bf0b327b9a77385efb6";
-  let city = "New York";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
 
-  axios.get(apiUrl).then(handleResponse);
+  function search() {
+    const apiKey = "7797aa5c054d2bf0b327b9a77385efb6";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
+  }
+
+  function handleSearch(event) {
+    setCity(event.target.value);
+  }
   if (ready) {
     return (
       <div className="Weather">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-9">
               <input
@@ -38,6 +50,7 @@ export default function Weather(props) {
                 placeholder="Enter a city...."
                 className="form-control"
                 autoFocus="on"
+                onChange={handleSearch}
               />
             </div>
             <div className="col-3">
@@ -49,34 +62,7 @@ export default function Weather(props) {
             </div>
           </div>
         </form>
-        <h1>{weatherData.city}</h1>
-
-        <br />
-
-        <ul>
-          <li>
-            <FormattedDate date={weatherData.date} />
-          </li>
-          <li className="text-capitalize">{weatherData.description}</li>
-        </ul>
-
-        <div className="row">
-          <div className="col-6">
-            <img src={weatherData.iconUrl} alt={weatherData.description} />
-
-            <span className="temperature">
-              {Math.round(weatherData.temperature)}
-            </span>
-            <span className="temperature-unit">°C</span>
-          </div>
-          <div className="col-6">
-            <ul>
-              <li>Precipitation: 10%</li>
-              <li>Humidity: {weatherData.humidity}%</li>
-              <li>Wind: {Math.round(weatherData.wind)} km/h</li>
-            </ul>
-          </div>
-        </div>
+        <WeatherInfo data={weatherData} />
       </div>
     );
   } else {
